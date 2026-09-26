@@ -46,6 +46,7 @@ dependencies:
   webview_flutter_web: ^0.2.3+4
   material_charts: ^0.0.39
   syncfusion_flutter_charts: ^34.2.9
+  flutter_echarts: ^2.5.0
 
 dev_dependencies:
   flutter_test:

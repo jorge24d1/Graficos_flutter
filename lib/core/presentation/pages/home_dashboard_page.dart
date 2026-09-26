@@ -40,7 +40,7 @@ class HomeDashboardPage extends StatelessWidget {
       icon: Icons.pie_chart_outline_rounded,
       color: Color(0xFF006874),
       targetPage: FlutterEchartsShowcasePage(),
-      isCompleted: false,
+      isCompleted: true,
     ),
     const ChartLibraryOption(
       title: 'High Charts',
