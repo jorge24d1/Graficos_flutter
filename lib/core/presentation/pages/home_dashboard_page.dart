@@ -1,8 +1,8 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../../../features/material_charts/presentation/pages/material_charts_showcase_page.dart';
 import '../../../features/flutter_echarts/presentation/pages/flutter_echarts_showcase_page.dart';
 import '../../../features/high_chart/presentation/pages/high_chart_showcase_page.dart';
-import '../../../features/interactive_chart/presentation/pages/interactive_chart_showcase_page.dart';
+import '../../../features/syncfusion_flutter_charts/presentation/pages/syncfusion_flutter_charts_showcase_page.dart';
 
 class ChartLibraryOption {
   final String title;
@@ -10,13 +10,16 @@ class ChartLibraryOption {
   final IconData icon;
   final Color color;
   final Widget targetPage;
+  final bool isCompleted;
 
   const ChartLibraryOption({
     required this.title,
     required this.description,
     required this.icon,
     required this.color,
-    required this.targetPage,  });
+    required this.targetPage,
+    this.isCompleted = false,
+  });
 }
 
 class HomeDashboardPage extends StatelessWidget {
@@ -25,31 +28,35 @@ class HomeDashboardPage extends StatelessWidget {
   static final List<ChartLibraryOption> _libraries = [
     const ChartLibraryOption(
       title: 'Material Charts',
-      description: '12 gráficos básicos y 8 avanzados diseñados con estilo nativo Material 3.',
+      description: 'Librería nativa de Flutter con estilo Material Design 3.',
       icon: Icons.bar_chart_rounded,
       color: Color(0xFF6750A4),
       targetPage: MaterialChartsShowcasePage(),
+      isCompleted: true,
     ),
     const ChartLibraryOption(
       title: 'Flutter Echarts',
-      description: 'Visualizaciones complejas basadas en Apache ECharts.',
+      description: 'Wrapper de Apache ECharts renderizado vía WebView.',
       icon: Icons.pie_chart_outline_rounded,
       color: Color(0xFF006874),
       targetPage: FlutterEchartsShowcasePage(),
+      isCompleted: false,
     ),
     const ChartLibraryOption(
       title: 'High Charts',
-      description: 'Gráficos analíticos e interactivos estilo Highcharts.',
+      description: 'Librería JS de Highcharts integrada con WebView en Flutter.',
       icon: Icons.show_chart_rounded,
       color: Color(0xFF984061),
       targetPage: HighChartShowcasePage(),
+      isCompleted: true,
     ),
     const ChartLibraryOption(
-      title: 'Interactive Charts',
-      description: 'Gráficos financieros y de velas con gestos e interactividad.',
+      title: 'Syncfusion Charts',
+      description: 'Componentes nativos de Syncfusion: ricos y personalizables.',
       icon: Icons.candlestick_chart_rounded,
       color: Color(0xFF705D00),
-      targetPage: InteractiveChartShowcasePage(),
+      targetPage: SyncfusionFlutterChartsShowcasePage(),
+      isCompleted: true,
     ),
   ];
 
@@ -164,6 +171,27 @@ class HomeDashboardPage extends StatelessWidget {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
+                                            if (lib.isCompleted)
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(
+                                                    horizontal: 8, vertical: 2),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.green.withValues(alpha: 0.15),
+                                                  borderRadius: BorderRadius.circular(12),
+                                                  border: Border.all(
+                                                    color: Colors.green,
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                child: const Text(
+                                                  'Completado',
+                                                  style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
                                           ],
                                         ),
                                         const SizedBox(height: 6),
