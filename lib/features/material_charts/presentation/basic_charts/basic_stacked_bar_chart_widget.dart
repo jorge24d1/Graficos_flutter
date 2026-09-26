@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:material_charts/material_charts.dart';
 import '../../data/datasources/material_charts_mock_datasource.dart';
-import '../../data/models/material_chart_models.dart';
+import '../../data/models/material_chart_models.dart' as mock;
 
 class MaterialChartsBasicStackedBarChartWidget extends StatefulWidget {
-  final List<MultiSeriesChartDataPoint>? data;
+  final List<mock.MultiSeriesChartDataPoint>? data;
   const MaterialChartsBasicStackedBarChartWidget({super.key, this.data});
 
   @override
@@ -21,15 +22,20 @@ class _MaterialChartsBasicStackedBarChartWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final chartData = widget.data ??
+    final rawData = widget.data ??
         MaterialChartsMockDatasource().getStackedBarChartData();
     final theme = Theme.of(context);
 
-    double maxTotal = 0;
-    for (var item in chartData) {
-      double sum = item.values.fold(0, (a, b) => a + b);
-      if (sum > maxTotal) maxTotal = sum;
-    }
+    final chartData = rawData.map((item) {
+      final segments = List.generate(item.values.length, (sIdx) {
+        return StackedBarSegment(
+          value: item.values[sIdx],
+          color: seriesColors[sIdx % seriesColors.length],
+          label: item.seriesNames[sIdx],
+        );
+      });
+      return StackedBarData(label: item.label, segments: segments);
+    }).toList();
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -47,76 +53,12 @@ class _MaterialChartsBasicStackedBarChartWidgetState
               ),
               const SizedBox(height: 6),
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: List.generate(chartData.length, (index) {
-                    final item = chartData[index];
-                    final itemTotal = item.values.fold<double>(0, (a, b) => a + b);
-
-                    return Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: FractionallySizedBox(
-                                heightFactor: (itemTotal / maxTotal).clamp(0.05, 1.0),
-                                widthFactor: 0.55,
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: List.generate(item.values.length, (sIdx) {
-                                      final val = item.values[sIdx];
-                                      return Expanded(
-                                        flex: (val * 100).toInt(),
-                                        child: Container(
-                                          color: seriesColors[sIdx % seriesColors.length],
-                                        ),
-                                      );
-                                    }),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            item.label,
-                            style: theme.textTheme.labelSmall?.copyWith(fontSize: 11),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+                child: MaterialStackedBarChart(
+                  data: chartData,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight - 40,
                 ),
               ),
-              const SizedBox(height: 4),
-              if (chartData.isNotEmpty)
-                Wrap(
-                  spacing: 12,
-                  alignment: WrapAlignment.center,
-                  children: List.generate(chartData.first.seriesNames.length,
-                      (sIdx) {
-                    return Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          color: seriesColors[sIdx % seriesColors.length],
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          chartData.first.seriesNames[sIdx],
-                          style: theme.textTheme.labelSmall?.copyWith(fontSize: 10),
-                        ),
-                      ],
-                    );
-                  }),
-                ),
             ],
           ),
         );

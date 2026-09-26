@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../features/material_charts/presentation/pages/material_charts_showcase_page.dart';
 import '../../../features/flutter_echarts/presentation/pages/flutter_echarts_showcase_page.dart';
 import '../../../features/high_chart/presentation/pages/high_chart_showcase_page.dart';
@@ -10,16 +10,13 @@ class ChartLibraryOption {
   final IconData icon;
   final Color color;
   final Widget targetPage;
-  final bool isCompleted;
 
   const ChartLibraryOption({
     required this.title,
     required this.description,
     required this.icon,
     required this.color,
-    required this.targetPage,
-    this.isCompleted = false,
-  });
+    required this.targetPage,  });
 }
 
 class HomeDashboardPage extends StatelessWidget {
@@ -32,7 +29,6 @@ class HomeDashboardPage extends StatelessWidget {
       icon: Icons.bar_chart_rounded,
       color: Color(0xFF6750A4),
       targetPage: MaterialChartsShowcasePage(),
-      isCompleted: true,
     ),
     const ChartLibraryOption(
       title: 'Flutter Echarts',
@@ -40,7 +36,6 @@ class HomeDashboardPage extends StatelessWidget {
       icon: Icons.pie_chart_outline_rounded,
       color: Color(0xFF006874),
       targetPage: FlutterEchartsShowcasePage(),
-      isCompleted: false,
     ),
     const ChartLibraryOption(
       title: 'High Charts',
@@ -48,7 +43,6 @@ class HomeDashboardPage extends StatelessWidget {
       icon: Icons.show_chart_rounded,
       color: Color(0xFF984061),
       targetPage: HighChartShowcasePage(),
-      isCompleted: false,
     ),
     const ChartLibraryOption(
       title: 'Interactive Charts',
@@ -56,7 +50,6 @@ class HomeDashboardPage extends StatelessWidget {
       icon: Icons.candlestick_chart_rounded,
       color: Color(0xFF705D00),
       targetPage: InteractiveChartShowcasePage(),
-      isCompleted: false,
     ),
   ];
 
@@ -171,27 +164,6 @@ class HomeDashboardPage extends StatelessWidget {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
-                                            if (lib.isCompleted)
-                                              Container(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 8, vertical: 2),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.green.withValues(alpha: 0.15),
-                                                  borderRadius: BorderRadius.circular(12),
-                                                  border: Border.all(
-                                                    color: Colors.green,
-                                                    width: 1,
-                                                  ),
-                                                ),
-                                                child: const Text(
-                                                  'Completado',
-                                                  style: TextStyle(
-                                                    color: Colors.green,
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
                                           ],
                                         ),
                                         const SizedBox(height: 6),
