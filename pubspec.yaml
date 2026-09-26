@@ -35,6 +35,16 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # WebView para renderizar Highcharts (JS) dentro de Flutter
+  # -> Android / iOS / macOS / Web
+  webview_flutter: ^4.9.0
+
+  # -> Windows (webview_flutter no soporta Windows; este paquete usa WebView2)
+  webview_windows: ^0.4.0
+
+  # -> Web / Chrome (implementación web de webview_flutter)
+  webview_flutter_web: ^0.2.3+4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,6 +77,15 @@ flutter:
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/to/asset-from-package
+  assets:
+    - lib/features/high_chart/presentation/Data/graficos_data.json
+    - lib/features/high_chart/presentation/Data/js/highcharts.js
+    - lib/features/high_chart/presentation/Data/js/highcharts-more.js
+    - lib/features/high_chart/presentation/Data/js/highcharts-stock.js
+    - lib/features/high_chart/presentation/Data/js/highcharts-funnel.js
+    - lib/features/high_chart/presentation/Data/js/highcharts-heatmap.js
+    - lib/features/high_chart/presentation/Data/js/highcharts-sankey.js
+    - lib/features/high_chart/presentation/Data/js/highcharts-treemap.js
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
