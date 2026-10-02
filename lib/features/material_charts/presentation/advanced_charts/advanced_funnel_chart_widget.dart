@@ -13,13 +13,23 @@ class MaterialChartsAdvancedFunnelChartWidget extends StatelessWidget {
     final chartData = rawData.map((e) => BarChartData(label: e.stage, value: e.value)).toList();
     
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Gráfico Funnel (Simulado con MaterialBarChart)', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
-          const SizedBox(height: 8),
-          Expanded(child: MaterialBarChart(data: chartData, width: 800, height: 400)),
+          const SizedBox(height: 6),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return MaterialBarChart(
+                  data: chartData,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

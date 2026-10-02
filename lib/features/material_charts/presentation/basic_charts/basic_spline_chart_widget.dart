@@ -18,13 +18,23 @@ class _MaterialChartsBasicSplineChartWidgetState extends State<MaterialChartsBas
     final chartData = rawData.map((e) => ChartData(label: e.label, value: e.value)).toList();
     
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Gráfico de Spline (Simulado con MaterialChartLine)', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
-          const SizedBox(height: 8),
-          Expanded(child: MaterialChartLine(data: chartData, width: 800, height: 400)),
+          const SizedBox(height: 6),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return MaterialChartLine(
+                  data: chartData,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

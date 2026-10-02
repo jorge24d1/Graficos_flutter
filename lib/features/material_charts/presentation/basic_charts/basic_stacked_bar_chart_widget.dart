@@ -37,32 +37,32 @@ class _MaterialChartsBasicStackedBarChartWidgetState
       return StackedBarData(label: item.label, segments: segments);
     }).toList();
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Gráfico de Barras Apiladas (Stacked)',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.primary,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Expanded(
-                child: MaterialStackedBarChart(
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Gráfico de Barras Apiladas (Stacked)',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return MaterialStackedBarChart(
                   data: chartData,
                   width: constraints.maxWidth,
-                  height: constraints.maxHeight - 40,
-                ),
-              ),
-            ],
+                  height: constraints.maxHeight,
+                );
+              },
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
