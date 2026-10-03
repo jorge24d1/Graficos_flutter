@@ -1,0 +1,430 @@
+{
+    "ventas_mensuales": [
+        {
+            "mes": "Enero",
+            "ventas": 125000,
+            "meta": 120000,
+            "clientes": 85
+        },
+        {
+            "mes": "Febrero",
+            "ventas": 138000,
+            "meta": 130000,
+            "clientes": 92
+        },
+        {
+            "mes": "Marzo",
+            "ventas": 152000,
+            "meta": 145000,
+            "clientes": 105
+        },
+        {
+            "mes": "Abril",
+            "ventas": 143000,
+            "meta": 150000,
+            "clientes": 98
+        },
+        {
+            "mes": "Mayo",
+            "ventas": 175000,
+            "meta": 160000,
+            "clientes": 118
+        },
+        {
+            "mes": "Junio",
+            "ventas": 190000,
+            "meta": 175000,
+            "clientes": 127
+        }
+    ],
+    "ventas_productos": [
+        {
+            "producto": "Laptop",
+            "categoria": "Computadores",
+            "ventas": 185
+        },
+        {
+            "producto": "Celular",
+            "categoria": "Telefonía",
+            "ventas": 260
+        },
+        {
+            "producto": "Tablet",
+            "categoria": "Computadores",
+            "ventas": 145
+        },
+        {
+            "producto": "Monitor",
+            "categoria": "Accesorios",
+            "ventas": 120
+        },
+        {
+            "producto": "Teclado",
+            "categoria": "Accesorios",
+            "ventas": 210
+        },
+        {
+            "producto": "Mouse",
+            "categoria": "Accesorios",
+            "ventas": 235
+        }
+    ],
+    "ventas_ciudades": [
+        {
+            "ciudad": "Bogotá",
+            "ventas": 450000
+        },
+        {
+            "ciudad": "Medellín",
+            "ventas": 320000
+        },
+        {
+            "ciudad": "Cartagena",
+            "ventas": 185000
+        },
+        {
+            "ciudad": "Barranquilla",
+            "ventas": 240000
+        },
+        {
+            "ciudad": "Cali",
+            "ventas": 290000
+        }
+    ],
+    "ventas_categorias": [
+        {
+            "categoria": "Computadores",
+            "ventas": 330000
+        },
+        {
+            "categoria": "Telefonía",
+            "ventas": 280000
+        },
+        {
+            "categoria": "Accesorios",
+            "ventas": 190000
+        },
+        {
+            "categoria": "Audio",
+            "ventas": 125000
+        }
+    ],
+    "ventas_por_vendedor": [
+        {
+            "vendedor": "Ana",
+            "ventas": 185000
+        },
+        {
+            "vendedor": "Carlos",
+            "ventas": 220000
+        },
+        {
+            "vendedor": "Laura",
+            "ventas": 195000
+        },
+        {
+            "vendedor": "Andrés",
+            "ventas": 160000
+        },
+        {
+            "vendedor": "Sofía",
+            "ventas": 210000
+        }
+    ],
+    "temperatura": [
+        {
+            "hora": "08:00",
+            "temperatura": 19
+        },
+        {
+            "hora": "10:00",
+            "temperatura": 22
+        },
+        {
+            "hora": "12:00",
+            "temperatura": 26
+        },
+        {
+            "hora": "14:00",
+            "temperatura": 29
+        },
+        {
+            "hora": "16:00",
+            "temperatura": 28
+        },
+        {
+            "hora": "18:00",
+            "temperatura": 24
+        },
+        {
+            "hora": "20:00",
+            "temperatura": 21
+        }
+    ],
+    "edad_salario": [
+        {
+            "edad": 22,
+            "salario": 1800000
+        },
+        {
+            "edad": 25,
+            "salario": 2100000
+        },
+        {
+            "edad": 28,
+            "salario": 2500000
+        },
+        {
+            "edad": 31,
+            "salario": 2900000
+        },
+        {
+            "edad": 35,
+            "salario": 3400000
+        },
+        {
+            "edad": 39,
+            "salario": 3900000
+        },
+        {
+            "edad": 43,
+            "salario": 4500000
+        }
+    ],
+    "ventas_departamentos": [
+        {
+            "departamento": "Computadores",
+            "online": 120,
+            "tienda": 85
+        },
+        {
+            "departamento": "Telefonía",
+            "online": 180,
+            "tienda": 120
+        },
+        {
+            "departamento": "Accesorios",
+            "online": 95,
+            "tienda": 145
+        },
+        {
+            "departamento": "Audio",
+            "online": 70,
+            "tienda": 90
+        }
+    ],
+    "conversion_ventas": [
+        {
+            "etapa": "Visitantes",
+            "cantidad": 5000
+        },
+        {
+            "etapa": "Interesados",
+            "cantidad": 3200
+        },
+        {
+            "etapa": "Cotizaciones",
+            "cantidad": 1800
+        },
+        {
+            "etapa": "Negociaciones",
+            "cantidad": 950
+        },
+        {
+            "etapa": "Ventas",
+            "cantidad": 620
+        }
+    ],
+    "flujo_clientes": [
+        {
+            "origen": "Publicidad",
+            "destino": "Web",
+            "cantidad": 850
+        },
+        {
+            "origen": "Redes Sociales",
+            "destino": "Web",
+            "cantidad": 620
+        },
+        {
+            "origen": "Web",
+            "destino": "Cotización",
+            "cantidad": 980
+        },
+        {
+            "origen": "Tienda",
+            "destino": "Cotización",
+            "cantidad": 540
+        },
+        {
+            "origen": "Cotización",
+            "destino": "Venta",
+            "cantidad": 620
+        }
+    ],
+    "rendimiento": [
+        {
+            "empleado": "Ana",
+            "ventas": 85,
+            "satisfaccion": 92
+        },
+        {
+            "empleado": "Carlos",
+            "ventas": 95,
+            "satisfaccion": 88
+        },
+        {
+            "empleado": "Laura",
+            "ventas": 78,
+            "satisfaccion": 95
+        },
+        {
+            "empleado": "Andrés",
+            "ventas": 90,
+            "satisfaccion": 86
+        },
+        {
+            "empleado": "Sofía",
+            "ventas": 102,
+            "satisfaccion": 91
+        }
+    ],
+    "distribucion_puntajes": [
+        62,
+        68,
+        71,
+        75,
+        78,
+        80,
+        82,
+        84,
+        85,
+        87,
+        88,
+        90,
+        91,
+        92,
+        94,
+        95,
+        96,
+        98
+    ],
+    "horas_actividad": [
+        {
+            "dia": "Lunes",
+            "08": 25,
+            "10": 42,
+            "12": 35,
+            "14": 48,
+            "16": 52
+        },
+        {
+            "dia": "Martes",
+            "08": 30,
+            "10": 45,
+            "12": 38,
+            "14": 55,
+            "16": 58
+        },
+        {
+            "dia": "Miércoles",
+            "08": 28,
+            "10": 50,
+            "12": 42,
+            "14": 60,
+            "16": 62
+        },
+        {
+            "dia": "Jueves",
+            "08": 32,
+            "10": 48,
+            "12": 45,
+            "14": 57,
+            "16": 65
+        },
+        {
+            "dia": "Viernes",
+            "08": 35,
+            "10": 55,
+            "12": 48,
+            "14": 62,
+            "16": 70
+        }
+    ],
+    "cumplimiento": {
+        "actual": 87,
+        "meta": 90
+    },
+    "precios_accion": [
+        {
+            "fecha": "2024-01-01",
+            "apertura": 1000,
+            "maximo": 1050,
+            "minimo": 980,
+            "cierre": 1030
+        },
+        {
+            "fecha": "2024-01-02",
+            "apertura": 1030,
+            "maximo": 1080,
+            "minimo": 1010,
+            "cierre": 1015
+        },
+        {
+            "fecha": "2024-01-03",
+            "apertura": 1015,
+            "maximo": 1040,
+            "minimo": 990,
+            "cierre": 1005
+        },
+        {
+            "fecha": "2024-01-04",
+            "apertura": 1005,
+            "maximo": 1060,
+            "minimo": 995,
+            "cierre": 1050
+        },
+        {
+            "fecha": "2024-01-05",
+            "apertura": 1050,
+            "maximo": 1090,
+            "minimo": 1040,
+            "cierre": 1085
+        },
+        {
+            "fecha": "2024-01-08",
+            "apertura": 1085,
+            "maximo": 1100,
+            "minimo": 1055,
+            "cierre": 1060
+        },
+        {
+            "fecha": "2024-01-09",
+            "apertura": 1060,
+            "maximo": 1075,
+            "minimo": 1020,
+            "cierre": 1030
+        },
+        {
+            "fecha": "2024-01-10",
+            "apertura": 1030,
+            "maximo": 1070,
+            "minimo": 1025,
+            "cierre": 1065
+        },
+        {
+            "fecha": "2024-01-11",
+            "apertura": 1065,
+            "maximo": 1110,
+            "minimo": 1060,
+            "cierre": 1100
+        },
+        {
+            "fecha": "2024-01-12",
+            "apertura": 1100,
+            "maximo": 1120,
+            "minimo": 1080,
+            "cierre": 1095
+        }
+    ]
+}

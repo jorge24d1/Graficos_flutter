@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:material_charts/material_charts.dart';
+import '../../data/datasources/material_charts_mock_datasource.dart';
+import '../../data/models/material_chart_models.dart' as mock;
+
+class MaterialChartsBasicSplineChartWidget extends StatefulWidget {
+  final List<mock.BasicChartDataPoint>? data;
+  const MaterialChartsBasicSplineChartWidget({super.key, this.data});
+
+  @override
+  State<MaterialChartsBasicSplineChartWidget> createState() => _MaterialChartsBasicSplineChartWidgetState();
+}
+
+class _MaterialChartsBasicSplineChartWidgetState extends State<MaterialChartsBasicSplineChartWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final rawData = widget.data ?? MaterialChartsMockDatasource().getSplineChartData();
+    final chartData = rawData.map((e) => ChartData(label: e.label, value: e.value)).toList();
+    
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text('Gráfico de Spline (Simulado con MaterialChartLine)', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
+          const SizedBox(height: 6),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return MaterialChartLine(
+                  data: chartData,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
