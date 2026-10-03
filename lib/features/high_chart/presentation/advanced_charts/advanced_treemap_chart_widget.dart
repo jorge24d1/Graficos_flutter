@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartAdvancedTreemapChartWidget extends StatelessWidget {
-  const HighChartAdvancedTreemapChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartAdvancedTreemapChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +71,29 @@ class HighChartAdvancedTreemapChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options, height: 360);
+        final chartWidget = HighchartsWidget(options: options, height: 360);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Mapa de Árbol Jerárquico (Treemap)',
+              description:
+                  'Organiza datos con estructura jerárquica en rectángulos anidados agrupados por familias o categorías, donde la superficie espacial de cada bloque es proporcional a su contribución numérica al total.',
+              useCases:
+                  'Es óptimo para explorar catálogos masivos de productos organizados por departamentos, estructuras presupuestarias multi-nivel del sector público o privado, distribución de activos en portafolios y uso de almacenamiento digital.',
+              interpretation:
+                  'Permite dimensionar simultáneamente la jerarquía general entre categorías mayores y distinguir con rapidez qué producto específico lidera y dinamiza las ventas dentro de su respectivo subgrupo.',
+              icon: Icons.dashboard_customize_rounded,
+            ),
+          ],
+        );
       },
     );
   }

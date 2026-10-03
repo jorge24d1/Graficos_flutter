@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartBasicStackedBarChartWidget extends StatelessWidget {
-  const HighChartBasicStackedBarChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartBasicStackedBarChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +56,29 @@ class HighChartBasicStackedBarChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico de Barras Apiladas (Stacked Bar)',
+              description:
+                  'Divide cada barra horizontal en sub-segmentos proporcionales apilados, permitiendo visualizar tanto el total agregado de cada categoría como la composición interna de sus partes.',
+              useCases:
+                  'Es muy útil para analizar la participación de canales comerciales complementarios (como unidades vendidas en canal online versus tienda física) cruzados por departamento o línea de negocio.',
+              interpretation:
+                  'Permite evaluar simultáneamente el volumen total alcanzado por cada departamento (longitud completa de la barra) y determinar qué canal ejerce mayor peso o predominio en cada área, detectando oportunidades de digitalización.',
+              icon: Icons.view_column_rounded,
+            ),
+          ],
+        );
       },
     );
   }

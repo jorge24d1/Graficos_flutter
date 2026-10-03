@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartAdvancedFunnelChartWidget extends StatelessWidget {
-  const HighChartAdvancedFunnelChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartAdvancedFunnelChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,29 @@ class HighChartAdvancedFunnelChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico de Embudo (Funnel de Ventas)',
+              description:
+                  'Representa etapas progresivas y secuenciales de un proceso comercial mediante secciones cónicas decrecientes, donde el ancho de cada segmento ilustra el volumen que avanza a la siguiente fase.',
+              useCases:
+                  'Es el pilar analítico en marketing digital, comercio electrónico y pipelines de ventas B2B/B2C para medir la tasa de conversión desde las visitas iniciales hasta la confirmación de la compra.',
+              interpretation:
+                  'Permite identificar con precisión milimétrica los cuellos de botella y etapas con mayor deserción o pérdida de prospectos (como el abandono entre el carrito y el checkout), orientando esfuerzos de optimización de UX y fidelización.',
+              icon: Icons.filter_alt_rounded,
+            ),
+          ],
+        );
       },
     );
   }

@@ -1,6 +1,6 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
-// Básicos
+// Básicos (12)
 import '../basic_charts/basic_bar_chart_widget.dart';
 import '../basic_charts/basic_line_chart_widget.dart';
 import '../basic_charts/basic_pie_chart_widget.dart';
@@ -14,7 +14,7 @@ import '../basic_charts/basic_spline_chart_widget.dart';
 import '../basic_charts/basic_stacked_bar_chart_widget.dart';
 import '../basic_charts/basic_stepped_line_chart_widget.dart';
 
-// Avanzados
+// Avanzados (8)
 import '../advanced_charts/advanced_candlestick_chart_widget.dart';
 import '../advanced_charts/advanced_heatmap_chart_widget.dart';
 import '../advanced_charts/advanced_treemap_chart_widget.dart';
@@ -73,14 +73,19 @@ class _HighChartShowcasePageState extends State<HighChartShowcasePage>
     _ChartItem(title: 'Tiempo real', description: 'Stream en vivo con datos de sensor', widget: HighChartAdvancedRealtimeStreamChartWidget()),
   ];
 
+  late final TextEditingController _searchController;
+  String _searchQuery = '';
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _searchController = TextEditingController();
   }
 
   @override
   void dispose() {
+    _searchController.dispose();
     _tabController.dispose();
     super.dispose();
   }
@@ -89,6 +94,18 @@ class _HighChartShowcasePageState extends State<HighChartShowcasePage>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
+    final query = _searchQuery.toLowerCase();
+    final filteredBasic = _basicCharts
+        .where((c) =>
+            c.title.toLowerCase().contains(query) ||
+            c.description.toLowerCase().contains(query))
+        .toList();
+    final filteredAdvanced = _advancedCharts
+        .where((c) =>
+            c.title.toLowerCase().contains(query) ||
+            c.description.toLowerCase().contains(query))
+        .toList();
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
@@ -115,7 +132,7 @@ class _HighChartShowcasePageState extends State<HighChartShowcasePage>
                   style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '12 básicos · 8 avanzados',
+                  '${_basicCharts.length} básicos · ${_advancedCharts.length} avanzados (20 total)',
                   style: theme.textTheme.labelSmall?.copyWith(color: colorScheme.onSurfaceVariant),
                 ),
               ],
@@ -128,17 +145,77 @@ class _HighChartShowcasePageState extends State<HighChartShowcasePage>
           unselectedLabelColor: colorScheme.onSurfaceVariant,
           indicatorColor: const Color(0xFF0086D4),
           indicatorWeight: 3,
-          tabs: const [
-            Tab(icon: Icon(Icons.show_chart), text: 'Básicos (12)'),
-            Tab(icon: Icon(Icons.auto_graph), text: 'Avanzados (8)'),
+          tabs: [
+            Tab(
+              icon: const Icon(Icons.show_chart),
+              text: 'Básicos (${filteredBasic.length})',
+            ),
+            Tab(
+              icon: const Icon(Icons.auto_graph),
+              text: 'Avanzados (${filteredAdvanced.length})',
+            ),
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
+      body: Column(
         children: [
-          _ChartListView(charts: _basicCharts),
-          _ChartListView(charts: _advancedCharts),
+          // Barra de búsqueda por nombre
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Buscar gráfico por nombre...',
+                prefixIcon: const Icon(Icons.search, color: Color(0xFF0086D4)),
+                suffixIcon: _searchQuery.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear, size: 20),
+                        tooltip: 'Limpiar búsqueda',
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() => _searchQuery = '');
+                        },
+                      )
+                    : null,
+                filled: true,
+                fillColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.45),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: const Color(0xFF0086D4).withValues(alpha: 0.3),
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: Color(0xFF0086D4),
+                    width: 1.5,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              ),
+              onChanged: (val) {
+                setState(() {
+                  _searchQuery = val.trim();
+                });
+              },
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _ChartListView(charts: filteredBasic, searchQuery: _searchQuery),
+                _ChartListView(charts: filteredAdvanced, searchQuery: _searchQuery),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -147,10 +224,50 @@ class _HighChartShowcasePageState extends State<HighChartShowcasePage>
 
 class _ChartListView extends StatelessWidget {
   final List<_ChartItem> charts;
-  const _ChartListView({required this.charts});
+  final String searchQuery;
+
+  const _ChartListView({
+    required this.charts,
+    this.searchQuery = '',
+  });
 
   @override
   Widget build(BuildContext context) {
+    if (charts.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.search_off_rounded,
+                size: 56,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+              const SizedBox(height: 14),
+              Text(
+                'No se encontraron gráficos',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                searchQuery.isNotEmpty
+                    ? 'No hay resultados que coincidan con "$searchQuery".'
+                    : 'No hay gráficos disponibles en esta sección.',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       itemCount: charts.length,
@@ -205,7 +322,7 @@ class _ChartCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 320, child: item.widget),
+          item.widget,
         ],
       ),
     );

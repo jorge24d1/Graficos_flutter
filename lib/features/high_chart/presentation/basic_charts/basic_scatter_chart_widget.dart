@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartBasicScatterChartWidget extends StatelessWidget {
-  const HighChartBasicScatterChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartBasicScatterChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +50,29 @@ class HighChartBasicScatterChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico de Dispersión (Scatter Plot)',
+              description:
+                  'Grafica observaciones individuales como puntos cartesianos en dos ejes (X, Y) con el propósito de revelar patrones de distribución, densidad y el tipo de relación entre dos variables numéricas.',
+              useCases:
+                  'Es indispensable en analítica estadística, econometría y recursos humanos para evaluar hipótesis y correlaciones (como la relación entre la edad o años de experiencia y la compensación salarial de los colaboradores).',
+              interpretation:
+                  'Permite determinar si existe una correlación positiva (a mayor edad, mayor salario) o negativa, evaluar el grado de dispersión interna y descubrir valores atípicos (outliers) que se distancian del comportamiento promedio.',
+              icon: Icons.grain_rounded,
+            ),
+          ],
+        );
       },
     );
   }

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartBasicSteppedLineChartWidget extends StatelessWidget {
-  const HighChartBasicSteppedLineChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartBasicSteppedLineChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +53,29 @@ class HighChartBasicSteppedLineChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico de Línea Escalonada (Stepped Line)',
+              description:
+                  'Presenta variaciones mediante tramos horizontales planos conectados por saltos verticales en ángulo recto, manteniendo constante el valor hasta que ocurre una variación abrupta en la siguiente etapa.',
+              useCases:
+                  'Es idóneo para variables que cambian por saltos discretos o etapas bien definidas (como cantidades de usuarios a través de las fases de un proceso comercial, cambios de tasas arancelarias o niveles fijos de inventario).',
+              interpretation:
+                  'Permite constatar con claridad que entre una etapa y otra no existe una variación gradual, sino una caída discreta en el paso de transición, evidenciando exactamente el volumen de usuarios descartados entre hitos consecutivos.',
+              icon: Icons.stairs_rounded,
+            ),
+          ],
+        );
       },
     );
   }
