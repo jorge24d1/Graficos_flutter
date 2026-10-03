@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartBasicPieChartWidget extends StatelessWidget {
-  const HighChartBasicPieChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartBasicPieChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,29 @@ class HighChartBasicPieChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico Circular / Pastel',
+              description:
+                  'Representa una cantidad total dividida en sectores angulares o rebanadas, donde el arco y la superficie de cada porción es proporcional a su contribución porcentual respecto al 100%.',
+              useCases:
+                  'Es óptimo para visualizar la cuota de participación o composición relativa de un conjunto pequeño de categorías mutuamente excluyentes (como ventas por vendedor, distribución presupuestaria o cuota de mercado).',
+              interpretation:
+                  'Facilita identificar qué vendedor o categoría posee la mayor dominancia en los resultados globales y evaluar si existe una alta concentración en pocos individuos o una contribución equilibrada en el equipo.',
+              icon: Icons.pie_chart_outline_rounded,
+            ),
+          ],
+        );
       },
     );
   }

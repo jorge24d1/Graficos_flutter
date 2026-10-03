@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartBasicBarChartWidget extends StatelessWidget {
-  const HighChartBasicBarChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartBasicBarChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,29 @@ class HighChartBasicBarChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico de Barras Horizontales',
+              description:
+                  'Representa datos cuantitativos mediante barras rectangulares horizontales cuya longitud es proporcional al valor de cada categoría, facilitando la comparación entre elementos independientes.',
+              useCases:
+                  'Es ideal para comparar métricas numéricas discretas (como ventas por ciudad, inventario por sucursal o desempeño individual) especialmente cuando los nombres de las categorías son largos o se desea ordenar de mayor a menor jerarquía.',
+              interpretation:
+                  'Permite identificar de un solo vistazo qué ciudades o categorías lideran la facturación, cuáles presentan menor desempeño y estimar la magnitud de las brechas comerciales entre cada una.',
+              icon: Icons.bar_chart_rounded,
+            ),
+          ],
+        );
       },
     );
   }

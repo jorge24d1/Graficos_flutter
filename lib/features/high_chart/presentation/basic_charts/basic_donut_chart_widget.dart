@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartBasicDonutChartWidget extends StatelessWidget {
-  const HighChartBasicDonutChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartBasicDonutChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,29 @@ class HighChartBasicDonutChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico de Dona (Donut Chart)',
+              description:
+                  'Variante del gráfico circular con un orificio central en forma de anillo que reduce la distorsión del área interior y focaliza la atención en la longitud del arco perimetral de cada categoría.',
+              useCases:
+                  'Resulta ideal para categorizaciones de ingresos por línea de negocio, desglose de inventario por departamento o distribución de costos operativos, proporcionando un diseño limpio y moderno para paneles ejecutivos.',
+              interpretation:
+                  'Ayuda a discernir rápidamente qué líneas de producto generan la mayor proporción de ingresos y evaluar el grado de diversificación de la cartera comercial, identificando posibles dependencias.',
+              icon: Icons.donut_large_rounded,
+            ),
+          ],
+        );
       },
     );
   }

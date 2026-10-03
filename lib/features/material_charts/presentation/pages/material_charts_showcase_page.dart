@@ -25,12 +25,14 @@ import '../advanced_charts/advanced_combined_multi_axis_chart_widget.dart';
 import '../advanced_charts/advanced_realtime_stream_chart_widget.dart';
 
 class ChartItemInfo {
+  final int number;
   final String title;
   final String description;
   final Widget widget;
   final bool isAdvanced;
 
   const ChartItemInfo({
+    required this.number,
     required this.title,
     required this.description,
     required this.widget,
@@ -53,61 +55,73 @@ class _MaterialChartsShowcasePageState extends State<MaterialChartsShowcasePage>
 
   final List<ChartItemInfo> _basicCharts = const [
     ChartItemInfo(
+      number: 1,
       title: 'Bar Chart',
       description: 'Gráfico de barras verticales interactivo con animación y tooltips.',
       widget: MaterialChartsBasicBarChartWidget(),
     ),
     ChartItemInfo(
+      number: 2,
       title: 'Line Chart',
       description: 'Gráfico de líneas continuas con marcadores de puntos e interactividad.',
       widget: MaterialChartsBasicLineChartWidget(),
     ),
     ChartItemInfo(
+      number: 3,
       title: 'Pie Chart',
       description: 'Gráfico circular para distribución proporcional de categorías.',
       widget: MaterialChartsBasicPieChartWidget(),
     ),
     ChartItemInfo(
+      number: 4,
       title: 'Donut Chart',
       description: 'Gráfico en forma de dona con resumen central.',
       widget: MaterialChartsBasicDonutChartWidget(),
     ),
     ChartItemInfo(
+      number: 5,
       title: 'Area Chart',
       description: 'Gráfico de área con degradado de color bajo la curva.',
       widget: MaterialChartsBasicAreaChartWidget(),
     ),
     ChartItemInfo(
+      number: 6,
       title: 'Scatter Plot',
       description: 'Gráfico de dispersión para correlaciones de dos variables.',
       widget: MaterialChartsBasicScatterChartWidget(),
     ),
     ChartItemInfo(
+      number: 7,
       title: 'Bubble Chart',
       description: 'Gráfico de burbujas (X, Y y Tamaño de burbuja).',
       widget: MaterialChartsBasicBubbleChartWidget(),
     ),
     ChartItemInfo(
+      number: 8,
       title: 'Radar Chart',
       description: 'Gráfico radial para evaluar múltiples atributos o KPIs.',
       widget: MaterialChartsBasicRadarChartWidget(),
     ),
     ChartItemInfo(
+      number: 9,
       title: 'Gauge Chart',
       description: 'Calibre tipo velocímetro para métricas de desempeño.',
       widget: MaterialChartsBasicGaugeChartWidget(),
     ),
     ChartItemInfo(
+      number: 10,
       title: 'Spline Chart',
       description: 'Línea de curva suave mediante Bézier cúbicas.',
       widget: MaterialChartsBasicSplineChartWidget(),
     ),
     ChartItemInfo(
+      number: 11,
       title: 'Stacked Bar Chart',
       description: 'Barras apiladas multiserie por categoría.',
       widget: MaterialChartsBasicStackedBarChartWidget(),
     ),
     ChartItemInfo(
+      number: 12,
       title: 'Stepped Line Chart',
       description: 'Línea en escalones para cambios discretos por fases.',
       widget: MaterialChartsBasicSteppedLineChartWidget(),
@@ -116,48 +130,56 @@ class _MaterialChartsShowcasePageState extends State<MaterialChartsShowcasePage>
 
   final List<ChartItemInfo> _advancedCharts = const [
     ChartItemInfo(
+      number: 1,
       title: 'Candlestick Chart',
       description: 'Velas financieras OHLC para análisis de bolsa y cripto.',
       widget: MaterialChartsAdvancedCandlestickChartWidget(),
       isAdvanced: true,
     ),
     ChartItemInfo(
+      number: 2,
       title: 'Heatmap Chart',
       description: 'Mapa de calor matricial por día y hora.',
       widget: MaterialChartsAdvancedHeatmapChartWidget(),
       isAdvanced: true,
     ),
     ChartItemInfo(
+      number: 3,
       title: 'Treemap Chart',
       description: 'Mapa de árbol jerárquico por volumen de proporción.',
       widget: MaterialChartsAdvancedTreemapChartWidget(),
       isAdvanced: true,
     ),
     ChartItemInfo(
+      number: 4,
       title: 'Funnel Chart',
       description: 'Embudo de conversión de fases de usuario.',
       widget: MaterialChartsAdvancedFunnelChartWidget(),
       isAdvanced: true,
     ),
     ChartItemInfo(
+      number: 5,
       title: 'Waterfall Chart',
       description: 'Gráfico en cascada para flujo financiero de pérdidas/ganancias.',
       widget: MaterialChartsAdvancedWaterfallChartWidget(),
       isAdvanced: true,
     ),
     ChartItemInfo(
+      number: 6,
       title: 'Sankey Flow Chart',
       description: 'Diagrama de Sankey para flujo y transferencia entre nodos.',
       widget: MaterialChartsAdvancedSankeyChartWidget(),
       isAdvanced: true,
     ),
     ChartItemInfo(
+      number: 7,
       title: 'Multi-Axis Combined Chart',
       description: 'Gráfico combinado multi-eje (Barras + Línea).',
       widget: MaterialChartsAdvancedCombinedMultiAxisChartWidget(),
       isAdvanced: true,
     ),
     ChartItemInfo(
+      number: 8,
       title: 'Realtime Stream Chart',
       description: 'Gráfico en vivo en tiempo real con transmisión activa de datos.',
       widget: MaterialChartsAdvancedRealtimeStreamChartWidget(),
@@ -184,7 +206,7 @@ class _MaterialChartsShowcasePageState extends State<MaterialChartsShowcasePage>
         return Dialog.fullscreen(
           child: Scaffold(
             appBar: AppBar(
-              title: Text(item.title),
+              title: Text('#${item.number} - ${item.title}'),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.close),
@@ -326,6 +348,21 @@ class _MaterialChartsShowcasePageState extends State<MaterialChartsShowcasePage>
               child: Column(
                 children: [
                   ListTile(
+                    leading: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        '#${item.number}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
                     title: Text(
                       item.title,
                       style: const TextStyle(fontWeight: FontWeight.bold),

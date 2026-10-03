@@ -19,7 +19,17 @@ class MaterialChartsAdvancedWaterfallChartWidget extends StatelessWidget {
         children: [
           Text('Gráfico Waterfall (Simulado con MaterialBarChart)', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
           const SizedBox(height: 6),
-          Expanded(child: MaterialBarChart(data: chartData, width: 800, height: 400)),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return MaterialBarChart(
+                  data: chartData,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

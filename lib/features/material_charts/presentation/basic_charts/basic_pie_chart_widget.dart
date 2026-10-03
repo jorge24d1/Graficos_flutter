@@ -46,7 +46,7 @@ class _MaterialChartsBasicPieChartWidgetState
     });
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
           Text(
@@ -58,12 +58,19 @@ class _MaterialChartsBasicPieChartWidgetState
               color: theme.colorScheme.primary,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Expanded(
-            child: MaterialPieChart(
-              data: chartData,
-              width: 220,
-              height: 220,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final chartSize = constraints.maxHeight.clamp(100.0, constraints.maxWidth);
+                return Center(
+                  child: MaterialPieChart(
+                    data: chartData,
+                    width: chartSize,
+                    height: chartSize,
+                  ),
+                );
+              },
             ),
           ),
         ],

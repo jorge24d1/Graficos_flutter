@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartBasicRadarChartWidget extends StatelessWidget {
-  const HighChartBasicRadarChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartBasicRadarChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +61,29 @@ class HighChartBasicRadarChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico de Radar / Polar (Spider Chart)',
+              description:
+                  'Dispone múltiples variables cuantitativas sobre ejes radiales que divergen desde un centro común, trazando formas poligonales que delimitan la huella o silueta general del desempeño.',
+              useCases:
+                  'Es óptimo para benchmarking de competencias profesionales, auditorías de calidad en productos, evaluación de madurez organizacional y comparación de múltiples KPIs entre distintos sujetos o equipos.',
+              interpretation:
+                  'Permite evaluar de inmediato la simetría y el equilibrio del perfil analizado: polígonos amplios y uniformes reflejan un rendimiento sólido e integral, mientras que vértices retraídos señalan debilidades o áreas críticas a fortalecer.',
+              icon: Icons.radar_rounded,
+            ),
+          ],
+        );
       },
     );
   }

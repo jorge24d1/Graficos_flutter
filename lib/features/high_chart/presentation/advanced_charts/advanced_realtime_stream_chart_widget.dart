@@ -3,9 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartAdvancedRealtimeStreamChartWidget extends StatefulWidget {
-  const HighChartAdvancedRealtimeStreamChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartAdvancedRealtimeStreamChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   State<HighChartAdvancedRealtimeStreamChartWidget> createState() =>
@@ -84,12 +90,34 @@ class _HighChartAdvancedRealtimeStreamChartWidgetState
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(
+        final chartWidget = HighchartsWidget(
           options: options,
           onReady: (controller) {
             _chartController = controller;
             _startStreaming();
           },
+        );
+
+        if (!widget.showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico de Transmisión en Tiempo Real (Live Stream)',
+              description:
+                  'Visualización continua de alta frecuencia que incorpora dinámicamente nuevas mediciones en vivo por segundo y descarta los registros antiguos mediante una ventana temporal deslizante.',
+              useCases:
+                  'Es indispensable en telemetría de dispositivos IoT, control de procesos industriales automatizados, signos vitales médicos, monitorización de infraestructura de servidores (CPU/memoria) y trading algorítmico.',
+              interpretation:
+                  'Permite supervisar la estabilidad operativa minuto a minuto, identificar anomalías, picos súbitos o desviaciones críticas en el instante preciso en que se generan, facilitando respuestas de contingencia inmediatas.',
+              icon: Icons.sensors_rounded,
+            ),
+          ],
         );
       },
     );

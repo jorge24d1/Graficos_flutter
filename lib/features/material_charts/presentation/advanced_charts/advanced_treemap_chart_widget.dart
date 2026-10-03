@@ -20,7 +20,20 @@ class MaterialChartsAdvancedTreemapChartWidget extends StatelessWidget {
         children: [
           Text('Gráfico Treemap (Simulado con MaterialPieChart)', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
           const SizedBox(height: 6),
-          Expanded(child: MaterialPieChart(data: chartData, width: 220, height: 220)),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final chartSize = constraints.maxHeight.clamp(100.0, constraints.maxWidth);
+                return Center(
+                  child: MaterialPieChart(
+                    data: chartData,
+                    width: chartSize,
+                    height: chartSize,
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

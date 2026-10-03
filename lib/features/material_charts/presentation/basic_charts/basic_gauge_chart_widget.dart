@@ -13,7 +13,7 @@ class MaterialChartsBasicGaugeChartWidget extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
           Text(
@@ -23,12 +23,19 @@ class MaterialChartsBasicGaugeChartWidget extends StatelessWidget {
               color: theme.colorScheme.primary,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Expanded(
-            child: MaterialChartHollowSemiCircle(
-              percentage: gaugeValue,
-              size: 200,
-              hollowRadius: 0.6,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final gaugeSize = (constraints.maxHeight * 0.85).clamp(80.0, constraints.maxWidth);
+                return Center(
+                  child: MaterialChartHollowSemiCircle(
+                    percentage: gaugeValue,
+                    size: gaugeSize,
+                    hollowRadius: 0.6,
+                  ),
+                );
+              },
             ),
           ),
         ],

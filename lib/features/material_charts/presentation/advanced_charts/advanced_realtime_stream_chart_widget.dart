@@ -61,21 +61,26 @@ class _MaterialChartsAdvancedRealtimeStreamChartWidgetState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Gráfico en Tiempo Real (MaterialChartLine)',
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+              Expanded(
+                child: Text(
+                  'Gráfico en Tiempo Real (MaterialChartLine)',
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
                 icon: Icon(
                   _isStreaming ? Icons.pause_circle : Icons.play_circle,
                   color: Theme.of(context).colorScheme.primary,
@@ -88,13 +93,17 @@ class _MaterialChartsAdvancedRealtimeStreamChartWidgetState
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Expanded(
-            child: MaterialChartLine(
-              data: _streamPoints.toList(),
-              width: 800,
-              height: 400,
-              style: const LineChartStyle(animationDuration: Duration(milliseconds: 0)),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return MaterialChartLine(
+                  data: _streamPoints.toList(),
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                  style: const LineChartStyle(animationDuration: Duration(milliseconds: 0)),
+                );
+              },
             ),
           ),
         ],

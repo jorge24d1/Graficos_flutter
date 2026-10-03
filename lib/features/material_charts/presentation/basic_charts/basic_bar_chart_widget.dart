@@ -21,32 +21,32 @@ class _MaterialChartsBasicBarChartWidgetState
     
     final chartData = rawData.map((e) => BarChartData(label: e.label, value: e.value)).toList();
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Gráfico de Barras Material',
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.primary,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Expanded(
-                child: MaterialBarChart(
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Gráfico de Barras Material',
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return MaterialBarChart(
                   data: chartData,
                   width: constraints.maxWidth,
-                  height: constraints.maxHeight - 40,
-                ),
-              ),
-            ],
+                  height: constraints.maxHeight,
+                );
+              },
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }

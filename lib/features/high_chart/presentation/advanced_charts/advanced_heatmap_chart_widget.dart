@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartAdvancedHeatmapChartWidget extends StatelessWidget {
-  const HighChartAdvancedHeatmapChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartAdvancedHeatmapChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +76,29 @@ class HighChartAdvancedHeatmapChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options, height: 360);
+        final chartWidget = HighchartsWidget(options: options, height: 360);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Mapa de Calor Matricial (Heatmap)',
+              description:
+                  'Distribuye registros numéricos en una cuadrícula bidimensional cruzando dos variables categóricas, donde la magnitud de cada intersección se codifica mediante un gradiente térmico de color.',
+              useCases:
+                  'Es perfecto para descubrir patrones de concurrencia y carga operativa: horarios pico de atención al cliente, consumo de servidores, densidad de compras por día/hora o accidentalidad vial.',
+              interpretation:
+                  'Permite detectar al instante núcleos de saturación y alta demanda (celdas con azules más oscuros) frente a valles de inactividad o baja utilización (celdas claras), facilitando la asignación eficiente de personal y recursos técnicos.',
+              icon: Icons.grid_on_rounded,
+            ),
+          ],
+        );
       },
     );
   }

@@ -10,16 +10,27 @@ class MaterialChartsAdvancedHeatmapChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rawData = data ?? MaterialChartsMockDatasource().getHeatmapChartData();
-    final chartData = rawData.map((e) => BarChartData(label: '${e.xLabel} ${e.yLabel}', value: e.intensity * 100)).toList();
     
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Gráfico Mapa de Calor (Simulado con MaterialBarChart)', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
-          const SizedBox(height: 8),
-          Expanded(child: MaterialBarChart(data: chartData, width: 800, height: 400)),
+          const SizedBox(height: 6),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final filteredData = rawData.length > 6 ? rawData.take(6).toList() : rawData;
+                final chartData = filteredData.map((e) => BarChartData(label: '${e.xLabel} ${e.yLabel}', value: e.intensity * 100)).toList();
+                return MaterialBarChart(
+                  data: chartData,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

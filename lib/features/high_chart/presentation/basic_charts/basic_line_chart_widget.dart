@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartBasicLineChartWidget extends StatelessWidget {
-  const HighChartBasicLineChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartBasicLineChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,29 @@ class HighChartBasicLineChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico de Líneas Continuas',
+              description:
+                  'Conecta observaciones continuas sucesivas mediante segmentos rectos a lo largo de una secuencia ordenada, ilustrando la trayectoria y evolución de una variable en el tiempo.',
+              useCases:
+                  'Es fundamental en series temporales para monitorear variables continuas (como variaciones de temperatura por hora, fluctuaciones bursátiles, visitas web o consumo energético a lo largo de una jornada).',
+              interpretation:
+                  'Permite identificar la dirección y fuerza de la tendencia (ascendente, descendente o estable), detectar momentos exactos de inflexión, picos máximos, caídas abruptas y patrones cíclicos periódicos.',
+              icon: Icons.show_chart_rounded,
+            ),
+          ],
+        );
       },
     );
   }

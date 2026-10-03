@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartAdvancedCombinedMultiAxisChartWidget extends StatelessWidget {
-  const HighChartAdvancedCombinedMultiAxisChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartAdvancedCombinedMultiAxisChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +76,29 @@ class HighChartAdvancedCombinedMultiAxisChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options);
+        final chartWidget = HighchartsWidget(options: options);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Gráfico Combinado Multi-Eje',
+              description:
+                  'Integra múltiples tipos de visualización (columnas y líneas) en un mismo lienzo utilizando dos o más ejes verticales independientes, permitiendo correlacionar métricas con escalas o unidades de medida muy dispares.',
+              useCases:
+                  'Es excelente para cruzar variables financieras en millones de pesos (como ventas y metas presupuestarias en el eje primario) con variables de conteo o volumen operativo (como número de clientes en el eje secundario).',
+              interpretation:
+                  'Permite diagnosticar si los aumentos en la facturación obedecen a un incremento en el volumen de clientes o a un mayor ticket promedio, analizando paralelamente la eficacia en el cumplimiento de las metas comerciales.',
+              icon: Icons.stacked_line_chart_rounded,
+            ),
+          ],
+        );
       },
     );
   }

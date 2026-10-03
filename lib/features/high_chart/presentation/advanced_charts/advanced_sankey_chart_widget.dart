@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import '../data/highchart_data_service.dart';
 import '../widgets/highcharts_widget.dart';
+import '../widgets/highchart_description_card.dart';
 
 class HighChartAdvancedSankeyChartWidget extends StatelessWidget {
-  const HighChartAdvancedSankeyChartWidget({super.key});
+  final bool showDescription;
+
+  const HighChartAdvancedSankeyChartWidget({
+    super.key,
+    this.showDescription = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,29 @@ class HighChartAdvancedSankeyChartWidget extends StatelessWidget {
           'credits': {'enabled': false},
         };
 
-        return HighchartsWidget(options: options, height: 360);
+        final chartWidget = HighchartsWidget(options: options, height: 360);
+
+        if (!showDescription) {
+          return chartWidget;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            chartWidget,
+            const HighChartDescriptionCard(
+              title: 'Diagrama de Sankey (Flujo de Distribución)',
+              description:
+                  'Visualiza trayectorias, transferencias y correlaciones de flujo entre múltiples nodos o etapas dentro de un sistema, donde el grosor de cada banda conectora es proporcional a la cantidad transferida.',
+              useCases:
+                  'Es idóneo para mapear la ruta y experiencia de los clientes (Customer Journey), flujos de navegación web entre páginas, balances de energía o costos, distribución presupuestaria y cadenas logísticas.',
+              interpretation:
+                  'Permite descubrir con total transparencia las rutas predominantes por donde transita la mayor masa de usuarios, identificar destinos secundarios y detectar puntos de fuga o dispersión donde el volumen se pierde significativamente.',
+              icon: Icons.alt_route_rounded,
+            ),
+          ],
+        );
       },
     );
   }

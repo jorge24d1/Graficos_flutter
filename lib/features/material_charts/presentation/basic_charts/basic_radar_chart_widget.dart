@@ -19,12 +19,25 @@ class _MaterialChartsBasicRadarChartWidgetState extends State<MaterialChartsBasi
     final chartData = List.generate(rawData.length, (index) => PieChartData(label: rawData[index].attribute, value: rawData[index].value, color: colors[index % colors.length]));
     
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
           Text('Gráfico Radar (Simulado con MaterialPieChart)', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
-          const SizedBox(height: 8),
-          Expanded(child: MaterialPieChart(data: chartData, width: 220, height: 220)),
+          const SizedBox(height: 6),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final chartSize = constraints.maxHeight.clamp(100.0, constraints.maxWidth);
+                return Center(
+                  child: MaterialPieChart(
+                    data: chartData,
+                    width: chartSize,
+                    height: chartSize,
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

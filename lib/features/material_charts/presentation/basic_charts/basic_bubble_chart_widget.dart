@@ -17,13 +17,23 @@ class _MaterialChartsBasicBubbleChartWidgetState extends State<MaterialChartsBas
     final rawData = widget.data ?? MaterialChartsMockDatasource().getBubbleChartData();
     final chartData = rawData.map((e) => BarChartData(label: e.label, value: e.y)).toList();
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text('Gráfico Burbujas (Simulado con MaterialBarChart)', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
-          const SizedBox(height: 8),
-          Expanded(child: MaterialBarChart(data: chartData, width: 800, height: 400)),
+          const SizedBox(height: 6),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return MaterialBarChart(
+                  data: chartData,
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
